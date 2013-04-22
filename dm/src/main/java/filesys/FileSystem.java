@@ -9,6 +9,7 @@ package filesys;
  */
 public abstract class FileSystem
 {
+    
     private String nom;
     private String type;
 
@@ -37,8 +38,7 @@ public abstract class FileSystem
      * Permet de connaître le nom du FileSystem(file,directory)
      * @return nom du FileSystem
      */
-    public String get_nom()
-    {
+    public String get_nom(){
     	return nom;
     }
 

@@ -1,5 +1,7 @@
 package filesys;
 
+import exception.*;
+
 /**
  * Classe Repertoire 
  * 
@@ -20,11 +22,12 @@ public class Repertoire extends FileSystem
      * Constructeur d'objets de la classe Repertoire
      * 
      * @param nom du Repertoire
+     * @exception FileSystemNullException si le nom est vide
      */
-    public Repertoire(String nom) 
+    public Repertoire(String nom) throws FileSystemNullException
     {
         super(nom,"directory");
-       
+        if(nom.equals(null)) throw new FileSystemNullException();
         liste = new FileSystem[NB_MAX_FILE_SYST];
         nbFile = 0;
     }
@@ -34,20 +37,20 @@ public class Repertoire extends FileSystem
      * Ajoute un fichier ou un repertoire si ce repertoire n'est pas complet
      * 
      * @param file
+     * @exception RepertoirePleinException si Repertoire plein
      * @return boolean vrai si ajout possible faux sinon
      */
-    public boolean ajouterFileSystem(FileSystem file)
+    public boolean ajouterFileSystem(FileSystem file) throws RepertoirePleinException
     {
-    	if(nbFile < NB_MAX_FILE_SYST) 
-    	{
+    	if(nbFile >= NB_MAX_FILE_SYST) throw new RepertoirePleinException();
+    	else{
     		if(this.notInDirectory(file) && this.notAlreadyExist(file)) {
 	            liste[nbFile++] = file;
 	            return true;
-    		}
-    		return false;
+	        }
+	        return false;
     	}
-    	else
-    		return false;
+        
     }
     
     /**
